@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Setup
 
-## Getting Started
-
-First, run the development server:
+1. First update .example.env file
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# DATABASE
+POSTGRES_URL=""
+
+# Email
+MY_EMAIL=""
+MY_PASSWORD=""
+
+# VERCEL
+VERCEL_URL=""
+
+# STRIPE
+STRIPE_SECRET_KEY=""
+STRIPE_WEBHOOK_SECRET=""
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Change app name in ./src/lib/constants.ts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```ts
+export const APP_NAME = "Next SaaS Template";
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Change the app logo in ./src/components/logo.tsx
 
-## Learn More
+```ts
+export const Logo = (props: React.SVGProps<SVGSVGElement>) => {
+  return (
+    ...
+  );
+};
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Generate all splash screens and app icons for PWA in public folder ./public/
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Add app icons to the app directory -> ./src/app/
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+6. Change name and update metadata inside the root layout ./src/app/layout.tsx
 
-## Deploy on Vercel
+```ts
+const APP_NAME = "Next SaaS Template";
+const APP_DEFAULT_TITLE = "Next SaaS Template";
+const APP_TITLE_TEMPLATE = "%s - Next SaaS Template";
+const APP_DESCRIPTION = "Official Next SaaS Template";
+const AUTHOR_NAME = "Talha Bayansar";
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+export const metadata: Metadata = {
+  applicationName: APP_NAME,
+  title: {
+    default: APP_DEFAULT_TITLE,
+    template: APP_TITLE_TEMPLATE,
+  },
+  description: APP_DESCRIPTION,
+  generator: "Next.js",
+  manifest: "/manifest.json",
+  keywords: ["Next", "SaaS", "Template"],
+  authors: [
+    { name: AUTHOR_NAME },
+    {
+      name: AUTHOR_NAME,
+      url: "https://www.linkedin.com/in/talha-bayansar-17039a19a/",
+    },
+  ],
+  appleWebApp: {
+    title: APP_DEFAULT_TITLE,
+    startupImage: [...],
+  },
+  openGraph: {
+    type: "website",
+    siteName: APP_NAME,
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary",
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
+};
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Run application
+
+1. Install dependencies:
+
+```bash
+# if react version is >19
+npm install
+# if react version is 19=<
+npm install --legacy-peer-deps
+# then
+npm run dev
+```
+
+2. Generate and migrate schema to the database
+
+```bash
+npm run db:generate
+npm run db:migrate
+```
+
+3. Run the development server:
+
+```bash
+# if react version is >19
+npm install
+# if react version is 19=<
+npm install --legacy-peer-deps
+# then
+npm run dev
+```
