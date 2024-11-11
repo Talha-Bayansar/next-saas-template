@@ -15,7 +15,7 @@ export const Header = ({ className, title, leading, trailing }: Props) => {
       <div className="hidden md:flex w-full items-center justify-between">
         <div className="flex items-center">
           {leading}
-          {title && <h1 className="heading-1">{title}</h1>}
+          {title && <h1 className="header-1">{title}</h1>}
         </div>
         {trailing}
       </div>
@@ -25,7 +25,7 @@ export const Header = ({ className, title, leading, trailing }: Props) => {
           {trailing}
         </div>
       )}
-      {title && <h1 className="heading-1 md:hidden">{title}</h1>}
+      {title && <h1 className="header-1 md:hidden">{title}</h1>}
     </header>
   );
 };

@@ -15,10 +15,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import { signOut } from "../api";
 
-export const SignOutButton = () => {
+type Props = {
+  children: React.ReactNode;
+};
+
+export const SignOutAlertDialog = ({ children }: Props) => {
   const { executeAsync, isPending } = useAction(signOut);
   const router = useRouter();
 
@@ -34,16 +37,16 @@ export const SignOutButton = () => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant={"destructive"}>Sign Out</Button>
+      <AlertDialogTrigger className="w-full" asChild>
+        {children}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            You are about to sign out.
-          </AlertDialogDescription>
         </AlertDialogHeader>
+        <AlertDialogDescription>
+          You are about to sign out.
+        </AlertDialogDescription>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <LoadingButton
