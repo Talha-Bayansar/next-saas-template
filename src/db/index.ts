@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
-const dbClient = postgres(process.env.DATABASE_URL!);
+const dbClient = postgres(process.env.POSTGRES_URL!);
 
 function singleton(
   name: string,

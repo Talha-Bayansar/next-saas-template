@@ -5,10 +5,10 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 type Props = {
-  searchParams: {
+  searchParams: Promise<{
     email?: string;
     prefill?: string;
-  };
+  }>;
 };
 
 export const metadata: Metadata = {
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   description: `Sign in to ${APP_NAME}`,
 };
 
-export default function SignInPage({
-  searchParams: { email, prefill },
-}: Props) {
+export default async function SignInPage({ searchParams }: Props) {
+  const { email, prefill } = await searchParams;
+
   return (
     <div className="container mx-auto flex p-4 md:p-0 relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">

@@ -10,7 +10,11 @@ export const LoadingButton = React.forwardRef<HTMLButtonElement, Props>(
   ({ children, disabled, isLoading = false, ...rest }, ref) => {
     return (
       <Button ref={ref} {...rest} disabled={disabled || isLoading}>
-        {isLoading ? <LoaderCircle /> : children}
+        {isLoading ? (
+          <LoaderCircle className="animate-spin text-gray-300" />
+        ) : (
+          children
+        )}
       </Button>
     );
   }
