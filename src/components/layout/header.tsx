@@ -1,31 +1,19 @@
 import { cn } from "@/lib/utils";
+import { SidebarTrigger } from "../ui/sidebar";
+import { Separator } from "../ui/separator";
+import { History, HistoryItem } from "./history";
 
 type Props = {
-  title?: string;
-  leading?: React.ReactNode;
-  trailing?: React.ReactNode;
+  items: HistoryItem[];
   className?: string;
 };
 
-export const Header = ({ className, title, leading, trailing }: Props) => {
+export const Header = ({ className, items }: Props) => {
   return (
-    <header
-      className={cn("flex flex-col gap-2 items-start mb-4 w-full", className)}
-    >
-      <div className="hidden md:flex w-full items-center justify-between">
-        <div className="flex items-center">
-          {leading}
-          {title && <h1 className="header-1">{title}</h1>}
-        </div>
-        {trailing}
-      </div>
-      {(leading || trailing) && (
-        <div className="flex gap-4 justify-between items-center w-full md:hidden">
-          {leading}
-          {trailing}
-        </div>
-      )}
-      {title && <h1 className="header-1 md:hidden">{title}</h1>}
+    <header className={cn("flex shrink-0 items-center gap-2 mb-8", className)}>
+      <SidebarTrigger className="-ml-1" />
+      <Separator orientation="vertical" className="mr-2 h-4" />
+      <History items={items} />
     </header>
   );
 };

@@ -1,9 +1,8 @@
 import { PageContainer } from "@/components/layout/page-container";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { requireAuth } from "@/features/auth/api";
 import { Metadata } from "next";
 import { DashboardSidebar } from "./_components/dashboard-sidebar";
-import { Main } from "@/components/layout/main";
 
 type Props = {
   children: React.ReactNode;
@@ -21,10 +20,7 @@ const DashboardLayout = async ({ children }: Props) => {
     <SidebarProvider>
       <DashboardSidebar user={user} />
       <PageContainer className="flex flex-col flex-grow">
-        <Main>
-          <SidebarTrigger className="mb-4" />
-          {children}
-        </Main>
+        {children}
       </PageContainer>
     </SidebarProvider>
   );
