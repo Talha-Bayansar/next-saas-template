@@ -22,6 +22,7 @@ import {
 import { SignOutAlertDialog } from "@/features/auth/components/sign-out-alert-dialog";
 import { User } from "@/db/schema";
 import { routes } from "@/lib/routes";
+import Link from "next/link";
 
 type Props = {
   user: User;
@@ -63,8 +64,11 @@ export function DashboardSidebar({ user }: Props) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <User2 /> {user.email}
-                  <ChevronUp className="ml-auto" />
+                  <User2 />{" "}
+                  <span className="overflow-hidden whitespace-nowrap text-ellipsis">
+                    {user.email}
+                  </span>
+                  <ChevronUp className="ml-auto shrink-0" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -72,11 +76,16 @@ export function DashboardSidebar({ user }: Props) {
                 className="w-[--radix-popper-anchor-width]"
               >
                 <DropdownMenuItem>
-                  <span>Settings</span>
+                  <Link
+                    className="w-full"
+                    href={routes.dashboard.settings.root}
+                  >
+                    Settings
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={(e) => e.preventDefault()}>
                   <SignOutAlertDialog>
-                    <span>Sign out</span>
+                    <button className="text-left">Sign out</button>
                   </SignOutAlertDialog>
                 </DropdownMenuItem>
               </DropdownMenuContent>
