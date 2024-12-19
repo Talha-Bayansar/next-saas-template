@@ -22,8 +22,8 @@ export async function createCheckoutSession({ priceId }: { priceId: string }) {
       },
     ],
     mode: "subscription",
-    success_url: `${process.env.VERCEL_URL}/api/stripe/checkout?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${process.env.VERCEL_URL}/pricing`,
+    success_url: `${process.env.BASE_URL}/api/stripe/checkout?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.BASE_URL}/pricing`,
     customer: user.stripeCustomerId || undefined,
     client_reference_id: user.id.toString(),
     allow_promotion_codes: true,
@@ -101,7 +101,7 @@ export async function createCustomerPortalSession() {
 
   return stripe.billingPortal.sessions.create({
     customer: user.stripeCustomerId,
-    return_url: `${process.env.VERCEL_URL}${routes.dashboard.settings.root}`,
+    return_url: `${process.env.BASE_URL}${routes.dashboard.settings.root}`,
     configuration: configuration.id,
   });
 }

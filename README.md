@@ -10,8 +10,8 @@ POSTGRES_URL=""
 MY_EMAIL=""
 MY_PASSWORD=""
 
-# VERCEL
-VERCEL_URL=""
+# CONFIG
+BASE_URL=""
 
 # STRIPE
 STRIPE_SECRET_KEY=""
@@ -97,8 +97,6 @@ export const metadata: Metadata = {
 npm install
 # if react version is 19=<
 npm install --legacy-peer-deps
-# then
-npm run dev
 ```
 
 2. Generate and migrate schema to the database
@@ -111,10 +109,5 @@ npm run db:migrate
 3. Run the development server:
 
 ```bash
-# if react version is >19
-npm install
-# if react version is 19=<
-npm install --legacy-peer-deps
-# then
 npm run dev
 ```

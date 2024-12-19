@@ -38,7 +38,7 @@ export const HeroSection = () => {
               </Link>
             </div>
           </div>
-          <div className="h-[550px] w-[550px] bg-gray-400 rounded" />
+          <div className="h-[550px] w-full bg-gray-400 rounded" />
         </div>
       </div>
     </section>

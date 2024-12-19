@@ -16,7 +16,6 @@ import {
 import { db } from "@/db";
 import { cookies } from "next/headers";
 import { cache } from "react";
-import { redirect } from "next/navigation";
 import { routes } from "@/lib/routes";
 import { generateRandomString, alphabet } from "oslo/crypto";
 import { TimeSpan, createDate } from "oslo";
@@ -25,6 +24,7 @@ import Mail from "nodemailer/lib/mailer";
 import { z } from "zod";
 import { safeAction } from "@/lib/safe-action";
 import { createErrorResponse, createSuccessResponse } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 async function generateSessionToken() {
   const bytes = new Uint8Array(20);
@@ -128,14 +128,18 @@ export type SessionValidationResult =
   | { session: Session; user: User }
   | { session: null; user: null };
 
-export const getUser = async () => {
-  const response = await validateRequest();
+export const getUser = cache(async () => {
+  const sessionId = (await cookies()).get("session")?.value ?? null;
+  if (!sessionId) {
+    return null;
+  }
 
-  return response.user;
-};
+  const result = await validateSessionToken(sessionId);
+  return result.user;
+});
 
 export const requireAuth = async () => {
-  const user = await getUser();
+  const { user } = await validateRequest();
   if (!user) {
     redirect(routes.signIn.root);
   }
@@ -199,7 +203,7 @@ const sendEmail = async (email: string, verificationCode: string) => {
   try {
     await sendMailPromise();
     return true;
-  } catch (err) {
+  } catch {
     return false;
   }
 };
@@ -228,7 +232,7 @@ export const sendEmailVerificationCode = safeAction
       const code = await generateEmailVerificationCode(email.toLowerCase());
       await sendEmail(email.toLowerCase(), code);
       return createSuccessResponse();
-    } catch (error) {
+    } catch {
       return createErrorResponse(
         "Something went wrong while sending verification code."
       );
@@ -292,7 +296,7 @@ export const signin = safeAction
               .delete(emailVerificationCodeTable)
               .where(eq(emailVerificationCodeTable.id, verificationCode[0].id));
 
-            return createSuccessResponse();
+            return createSuccessResponse(response);
           } else {
             return createErrorResponse(
               "Something went wrong while signing in."
@@ -302,7 +306,7 @@ export const signin = safeAction
       } else {
         return createErrorResponse("Something went wrong while signing in.");
       }
-    } catch (error) {
+    } catch {
       return createErrorResponse("Something went wrong while signing in.");
     }
   });

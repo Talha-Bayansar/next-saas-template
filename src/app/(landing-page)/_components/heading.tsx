@@ -8,8 +8,11 @@ import Link from "next/link";
 export const Heading = () => {
   return (
     <header className="px-4 lg:px-6 flex flex-col items-center py-4 md:flex-row gap-4 justify-between">
-      <Link href={routes.root} className="flex items-center justify-center">
-        <Logo className="w-36" />
+      <Link
+        href={routes.root}
+        className="flex items-center justify-center gap-2"
+      >
+        <Logo className="w-10 h-10" />
         <span className="sr-only">{APP_NAME}</span>
       </Link>
       <nav className="flex flex-col gap-4 sm:gap-6 items-center md:flex-row">
