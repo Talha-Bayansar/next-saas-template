@@ -23,25 +23,28 @@ import { SignOutAlertDialog } from "@/features/auth/components/sign-out-alert-di
 import { User } from "@/db/schema";
 import { routes } from "@/lib/routes";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 type Props = {
   user: User;
 };
 
-const items = [
-  {
-    title: "Home",
-    url: routes.dashboard.root,
-    icon: Home,
-  },
-];
-
 export function DashboardSidebar({ user }: Props) {
+  const t = useTranslations();
+
+  const items = [
+    {
+      title: t("home"),
+      url: routes.dashboard.root,
+      icon: Home,
+    },
+  ];
+
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
+          <SidebarGroupLabel>{t("dashboard")}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -80,12 +83,12 @@ export function DashboardSidebar({ user }: Props) {
                     className="w-full"
                     href={routes.dashboard.settings.root}
                   >
-                    Settings
+                    {t("settings")}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={(e) => e.preventDefault()}>
                   <SignOutAlertDialog>
-                    <button className="text-left">Sign out</button>
+                    <button className="text-left">{t("signOut")}</button>
                   </SignOutAlertDialog>
                 </DropdownMenuItem>
               </DropdownMenuContent>

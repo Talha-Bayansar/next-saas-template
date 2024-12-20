@@ -1,15 +1,17 @@
 import { Header } from "@/components/layout/header";
 import { HistoryItem } from "@/components/layout/history";
 import { Main } from "@/components/layout/main";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   children: React.ReactNode;
 };
 
-const DashboardRootLayout = ({ children }: Props) => {
+const DashboardRootLayout = async ({ children }: Props) => {
+  const t = await getTranslations();
   const history: HistoryItem[] = [
     {
-      label: "Dashboard",
+      label: t("dashboard"),
     },
   ];
 

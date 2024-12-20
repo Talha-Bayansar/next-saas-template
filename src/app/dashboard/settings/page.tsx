@@ -6,17 +6,19 @@ import { requireAuth } from "@/features/auth/api";
 import { HistoryItem } from "@/components/layout/history";
 import { routes } from "@/lib/routes";
 import { MySubscription } from "./_components/my-subscription";
+import { getTranslations } from "next-intl/server";
 
 const DashboardSettingsPage = async () => {
   const user = await requireAuth();
+  const t = await getTranslations();
 
   const history: HistoryItem[] = [
     {
-      label: "Dashboard",
+      label: t("dashboard"),
       href: routes.dashboard.root,
     },
     {
-      label: "Settings",
+      label: t("settings"),
     },
   ];
 

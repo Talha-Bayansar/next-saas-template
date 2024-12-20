@@ -1,0 +1,13 @@
+{
+  "home": "Home",
+  "dashboard": "Dashboard",
+  "settings": "Settings",
+  "signOut": "Sign out",
+  "mySubscription": "My Subscription",
+  "currentPlan": "Current Plan",
+  "free": "Free",
+  "billedMonthly": "Billed monthly",
+  "trialPeriod": "Trial period",
+  "noActiveSubscription": "No active subscription",
+  "manageSubscription": "Manage Subscription"
+}

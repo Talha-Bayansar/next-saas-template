@@ -1,30 +1,33 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { User } from "@/db/schema";
 import { ManageSubscriptionButton } from "@/features/subscription/components/manage-subscription-button";
+import { useTranslations } from "next-intl";
 
 type Props = {
   user: User;
 };
 
 export const MySubscription = ({ user }: Props) => {
+  const t = useTranslations();
+
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>My Subscription</CardTitle>
+        <CardTitle>{t("mySubscription")}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
             <div className="mb-4 sm:mb-0">
               <p className="font-medium capitalize">
-                Current Plan: {user.planName || "Free"}
+                {t("currentPlan")}: {user.planName || t("free")}
               </p>
               <p className="text-sm text-muted-foreground">
                 {user.subscriptionStatus === "active"
-                  ? "Billed monthly"
+                  ? t("billedMonthly")
                   : user.subscriptionStatus === "trialing"
-                  ? "Trial period"
-                  : "No active subscription"}
+                  ? t("trialPeriod")
+                  : t("noActiveSubscription")}
               </p>
             </div>
             <ManageSubscriptionButton />
