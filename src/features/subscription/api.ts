@@ -7,10 +7,19 @@ import {
   createCheckoutSession,
   createCustomerPortalSession,
 } from "@/lib/stripe";
+import { getTranslations } from "next-intl/server";
 
-const checkoutSchema = z.object({
-  priceId: z.string().min(1),
-});
+const checkoutSchema = async () => {
+  const t = await getTranslations();
+
+  return z.object({
+    priceId: z
+      .string({
+        required_error: t("validations.required", { field: "Price ID" }),
+      })
+      .min(1, t("validations.required", { field: "Price ID" })),
+  });
+};
 
 export const checkoutAction = safeAction
   .schema(checkoutSchema)

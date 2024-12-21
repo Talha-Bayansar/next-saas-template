@@ -1,4 +1,12 @@
 {
+  "validations": {
+    "required": "{{field}} est requis.",
+    "email": "S'il vous plaît, mettez une adresse email valide.",
+    "minLength": "{{field}} doit être au moins {{length}} caractères longs.",
+    "maxLength": "{{field}} ne doit pas être plus que {{length}} caractères longs.",
+    "minValue": "{{field}} doit avoir une valeur minimale de {{value}}.",
+    "maxValue": "{{field}} doit avoir une valeur maximale de {{value}}."
+  },
   "home": "Maison",
   "dashboard": "Tableau de bord",
   "settings": "Paramètres",

@@ -1,4 +1,12 @@
 {
+  "validations": {
+    "required": "{{field}} is vereist.",
+    "email": "Voer een geldig e-mailadres in.",
+    "minLength": "{{field}} moet tenminste zijn {{length}} karakters lang.",
+    "maxLength": "{{field}} mag niet meer zijn dan {{length}} karakters lang.",
+    "minValue": "{{field}} moet een minimale waarde hebben van {{value}}.",
+    "maxValue": "{{field}} mag een maximale waarde hebben van {{value}}."
+  },
   "home": "Thuis",
   "dashboard": "Dashboard",
   "settings": "Instellingen",

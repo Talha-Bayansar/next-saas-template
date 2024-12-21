@@ -224,9 +224,18 @@ async function generateEmailVerificationCode(email: string): Promise<string> {
   return code;
 }
 
-const emailSchema = z.object({
-  email: z.string().email().min(1),
-});
+const emailSchema = async () => {
+  const t = await getTranslations();
+
+  return z.object({
+    email: z
+      .string({
+        required_error: t("validations.required", { field: t("email") }),
+      })
+      .email(t("validations.email"))
+      .min(1, t("validations.minLength", { field: t("email"), length: "1" })),
+  });
+};
 
 export const sendEmailVerificationCode = safeAction
   .schema(emailSchema)
@@ -241,13 +250,34 @@ export const sendEmailVerificationCode = safeAction
     }
   });
 
-const signinSchema = z.object({
-  email: z.string().email().min(1),
-  code: z
-    .string()
-    .min(8, "Verification code must be 8 digits")
-    .max(8, "Verification code must be 8 digits"),
-});
+const signinSchema = async () => {
+  const t = await getTranslations();
+
+  return z.object({
+    email: z
+      .string({
+        required_error: t("validations.required", { field: t("email") }),
+      })
+      .email(t("validations.email"))
+      .min(1, t("validations.minLength", { field: t("email"), length: "1" })),
+    code: z
+      .string({ required_error: t("validations.required") })
+      .min(
+        8,
+        t("validations.minLength", {
+          field: t("verificationCode"),
+          length: "8",
+        })
+      )
+      .max(
+        8,
+        t("validations.maxLength", {
+          field: t("verificationCode"),
+          length: "8",
+        })
+      ),
+  });
+};
 
 export const signin = safeAction
   .schema(signinSchema)

@@ -1,4 +1,12 @@
 {
+  "validations": {
+    "required": "{{field}} is required.",
+    "email": "Please enter a valid email address.",
+    "minLength": "{{field}} must be at least {{length}} characters long.",
+    "maxLength": "{{field}} must be no more than {{length}} characters long.",
+    "minValue": "{{field}} must have a minimum value of {{value}}.",
+    "maxValue": "{{field}} must have a maximum value of {{value}}."
+  },
   "home": "Home",
   "dashboard": "Dashboard",
   "settings": "Settings",
