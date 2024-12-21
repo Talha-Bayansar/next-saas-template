@@ -18,12 +18,14 @@ import { routes } from "@/lib/routes";
 import { toast } from "sonner";
 import { LoadingButton } from "@/components/loading-button";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type Props = {
   prefill?: string;
 };
 
 export const SendCodeForm = ({ prefill }: Props) => {
+  const t = useTranslations();
   const formSchema = z.object({
     email: z.string().email(),
   });
@@ -40,7 +42,7 @@ export const SendCodeForm = ({ prefill }: Props) => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const response = await executeAsync(values);
     if (response?.data?.success) {
-      toast.success("Verification code has been sent.");
+      toast.success(t("sendVerificationCodeSuccess"));
       const searchParams = new URLSearchParams([["email", values.email]]);
       router.push(`${routes.signIn.root}?${searchParams}`);
     } else {
@@ -59,7 +61,7 @@ export const SendCodeForm = ({ prefill }: Props) => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t("email")}</FormLabel>
               <FormControl>
                 <Input
                   id="email"
@@ -76,7 +78,7 @@ export const SendCodeForm = ({ prefill }: Props) => {
           )}
         />
         <LoadingButton type="submit" isLoading={isPending}>
-          Send verification code
+          {t("sendVerificationCode")}
         </LoadingButton>
       </form>
     </Form>

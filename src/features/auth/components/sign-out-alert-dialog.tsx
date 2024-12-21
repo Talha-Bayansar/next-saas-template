@@ -16,12 +16,14 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { signOut } from "../api";
+import { useTranslations } from "next-intl";
 
 type Props = {
   children: React.ReactNode;
 };
 
 export const SignOutAlertDialog = ({ children }: Props) => {
+  const t = useTranslations();
   const { executeAsync, isPending } = useAction(signOut);
   const router = useRouter();
 
@@ -42,19 +44,17 @@ export const SignOutAlertDialog = ({ children }: Props) => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogTitle>{t("areYouSure")}</AlertDialogTitle>
         </AlertDialogHeader>
-        <AlertDialogDescription>
-          You are about to sign out.
-        </AlertDialogDescription>
+        <AlertDialogDescription>{t("signOutWarning")}</AlertDialogDescription>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
           <LoadingButton
             onClick={handleClick}
             variant={"destructive"}
             isLoading={isPending}
           >
-            Continue
+            {t("continue")}
           </LoadingButton>
         </AlertDialogFooter>
       </AlertDialogContent>

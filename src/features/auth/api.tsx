@@ -25,6 +25,7 @@ import { z } from "zod";
 import { safeAction } from "@/lib/safe-action";
 import { createErrorResponse, createSuccessResponse } from "@/lib/utils";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 async function generateSessionToken() {
   const bytes = new Uint8Array(20);
@@ -182,10 +183,12 @@ const sendEmail = async (email: string, verificationCode: string) => {
     },
   });
 
+  const t = await getTranslations();
+
   const mailOptions: Mail.Options = {
     from: process.env.MY_EMAIL,
     to: email,
-    subject: "Verification Code",
+    subject: t("verificationCode"),
     text: verificationCode,
   };
 
@@ -228,14 +231,13 @@ const emailSchema = z.object({
 export const sendEmailVerificationCode = safeAction
   .schema(emailSchema)
   .action(async ({ parsedInput: { email } }) => {
+    const t = await getTranslations();
     try {
       const code = await generateEmailVerificationCode(email.toLowerCase());
       await sendEmail(email.toLowerCase(), code);
       return createSuccessResponse();
     } catch {
-      return createErrorResponse(
-        "Something went wrong while sending verification code."
-      );
+      return createErrorResponse(t("sendVerificationCodeSuccess"));
     }
   });
 
@@ -250,6 +252,7 @@ const signinSchema = z.object({
 export const signin = safeAction
   .schema(signinSchema)
   .action(async ({ parsedInput: { email, code } }) => {
+    const t = await getTranslations();
     try {
       const verificationCode = await db
         .select()
@@ -298,23 +301,22 @@ export const signin = safeAction
 
             return createSuccessResponse(response);
           } else {
-            return createErrorResponse(
-              "Something went wrong while signing in."
-            );
+            return createErrorResponse(t("signInError"));
           }
         }
       } else {
-        return createErrorResponse("Something went wrong while signing in.");
+        return createErrorResponse(t("signInError"));
       }
     } catch {
-      return createErrorResponse("Something went wrong while signing in.");
+      return createErrorResponse(t("signInError"));
     }
   });
 
 export const signOut = safeAction.action(async () => {
+  const t = await getTranslations();
   const { session } = await validateRequest();
   if (!session) {
-    return createErrorResponse("Could not sign out.");
+    return createErrorResponse(t("signOutError"));
   }
 
   await invalidateSession(session.id);

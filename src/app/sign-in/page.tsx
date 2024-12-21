@@ -2,6 +2,7 @@ import { Logo } from "@/components/logo";
 import { AuthForm } from "@/features/auth/containers/auth-form";
 import { APP_NAME } from "@/lib/constants";
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
 type Props = {
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
 
 export default async function SignInPage({ searchParams }: Props) {
   const { email, prefill } = await searchParams;
+  const t = await getTranslations();
 
   return (
     <div className="container mx-auto flex p-4 md:p-0 relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
@@ -32,27 +34,27 @@ export default async function SignInPage({ searchParams }: Props) {
         <div className="items-center flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
             <h1 className="text-2xl font-semibold tracking-tight">
-              Sign into your account
+              {t("signIntoAccount")}
             </h1>
             <p className="text-sm text-muted-foreground">
-              Enter your email below to sign into your account
+              {t("enterEmailToSignIn")}
             </p>
           </div>
           <AuthForm email={email} prefill={prefill} />
           <p className="px-8 text-center text-sm text-muted-foreground">
-            By signing in, you agree to our{" "}
+            {t("signInToAgree")}{" "}
             <Link
               href="/terms"
               className="underline underline-offset-4 hover:text-primary"
             >
-              Terms of Service
+              {t("termsOfService")}
             </Link>{" "}
-            and{" "}
+            {t("and")}{" "}
             <Link
               href="/privacy"
               className="underline underline-offset-4 hover:text-primary"
             >
-              Privacy Policy
+              {t("privacyPolicy")}
             </Link>
             .
           </p>

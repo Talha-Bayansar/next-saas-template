@@ -23,6 +23,7 @@ import { routes } from "@/lib/routes";
 import { toast } from "sonner";
 import { signin } from "../api";
 import { LoadingButton } from "@/components/loading-button";
+import { useTranslations } from "next-intl";
 
 const formSchema = z.object({
   code: z.string().min(6).max(8),
@@ -33,6 +34,7 @@ type Props = {
 };
 
 export const VerifyCodeForm = ({ email }: Props) => {
+  const t = useTranslations();
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -67,7 +69,7 @@ export const VerifyCodeForm = ({ email }: Props) => {
           name="code"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Verification code</FormLabel>
+              <FormLabel>{t("verificationCode")}</FormLabel>
               <FormControl>
                 <InputOTP {...field} maxLength={8}>
                   <InputOTPGroup>
@@ -90,7 +92,7 @@ export const VerifyCodeForm = ({ email }: Props) => {
           )}
         />
         <LoadingButton className="w-full" type="submit" isLoading={isPending}>
-          Verify code
+          {t("verifyCode")}
         </LoadingButton>
       </form>
     </Form>

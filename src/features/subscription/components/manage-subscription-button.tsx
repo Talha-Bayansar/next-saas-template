@@ -19,6 +19,7 @@ export const ManageSubscriptionButton = () => {
       type="submit"
       variant="outline"
       isLoading={isPending}
+      className="sm:w-auto w-full"
     >
       {t("manageSubscription")}
     </LoadingButton>
